@@ -32,13 +32,16 @@
 <td>{{ item.product.price }}</td>
 <td>{{ item.quantity }}</td>
 <td></td>
-<td><a href='{% url "remove_from_cart" item.id %}'>Remove</a></tr>
+<td><a href='{% url "remove_from_cart" item.id %}'class="btn btn-danger" role="button">Eject </a></tr>
 {% endfor %}
 
 </table>
 
 <br/>
-<a href='{% url "checkout" %}'>Checkout</a>
+
+<p><a href="{% url "checkout" %}" class="btn btn-success" role="button">Checkout</a></br> 
+<p><a href="{% url "products" %}" class="btn btn-primary" role="button">Back to Food</a> 
+
 {% endif %}
 </div>
 {% endblock %}
