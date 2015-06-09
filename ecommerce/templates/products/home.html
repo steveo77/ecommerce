@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head_title %}
+Welcome to
+{% endblock %}
+
+{% block styles %}
+.jumbotron {
+	/*color: red;*/
+}
+{% endblock %}
+
+{% block jquery %}
+//alert("welcome!");
+{% endblock%}
+
+{# Comments here #}
+
+<style>
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #D8D6D6;
+}
+</style>
+
+
+{% block jumbotron2 %}
+  <div class="container">
+
+			<!-- Main component for a primary marketing message or call to action -->
+			<div class="jumbotron">
+			<h1> Hello {{ username_is }}</h1>
+			<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+			<p>To see the difference between static and fixed top navbars, just scroll.</p>
+			<p>
+			<a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+			</p>
+			</div>
+  </div>
+{% endblock %}
+
+
+
+{% block jumbotron %}
+
+<style>
+.jumbotron {
+  background-image: url("http://blog.neovitin.com/wp-content/uploads/2014/04/spinach.jpeg");
+ 
+}
+.jumbotron h1,h3, .lead-jumbtron {
+  color: #FFFFFF;
+}
+</style>
+
+<div class="jumbotron">
+  <center><h1>Welcome to Foober</h1></br>
+  <h3>An online market place where people can come and find</br> delicious food, from the people that love to cook their favorite dishes.</h3>
+  </br>
+  <p><a class="btn btn-primary btn-lg" href="{% url 'auth_register' %}" role="button">Register with Foober</a></p>
+</center>
+</div>
+
+</br>
+
+<div class='row featured-row'>
+  <center>
+  <div class='col-sm-12'>
+    
+    <div class='col-sm-4'>
+    <h2>Buy Food</h2>
+    <p class='lead'>
+    Search our marketplace for home cooked food, from professional Chefs and home cooks.
+    </p>
+    </div> 
+
+        <div class='col-sm-4'>
+    <h2>Cook Food</h2>
+    <p class='lead'>
+    Follow your passion and share with the community, the food you love to cook.
+    </p>
+    </div> 
+
+
+        <div class='col-sm-4'>
+    <h2>Help the World</h2>
+    <p class='lead'>
+    Help us all live a more flavorful life.
+    </p>
+    </div>    
+</center>
+
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+<div class='row'>
+<h2>Featured Foods</h2>
+
+{% for product in products %} 
+		<div class='col-sm-3'>
+
+
+
+			<div class="thumbnail">
+					{% if product.productimage_set.all %}
+
+							{% for item in product.productimage_set.all %}
+
+							{% if item.featured %} 
+							<div style="
+							width:215px;
+							height:200px;margin:0 auto;">
+
+								<a href='{{ product.get_absolute_url }}'>
+									<div class='background_img_thumb' style="height:200px;background-image: url('{{ MEDIA_URL }}{{ item.image }}');"></div>
+								</a>
+							</div>
+							<!-- <img class='img-responsive' src="{{ MEDIA_URL }}{{ item.image }}" /> -->
+							{% endif %}
+							 
+
+
+							{% endfor %}
+
+					{% else %}
+					<img class='img-responsive' src='{% static "img/placeholder.svg" %}' />
+					{% endif %}
+
+				<div class="caption">
+					<a href='{{ product.get_absolute_url }}'> <h4>{{ product.title }}</h4></a>
+					<h4>$ {{ product.price }}</h4>
+					<p><a href="{{ product.get_absolute_url }}" class="btn btn-primary btn-block" role="button">View</a> 
+
+          <form class='form' method='POST' action='{% url "add_to_cart" product.slug %}'> {% csrf_token %}
+          <input class='btn btn-default btn-block' type='submit' value='Add to cart'/>
+          <input  class="form-control"  name='qty' type='number' value='1'/>
+          {% if product.variation_set.sizes %}
+          <select class='form-control' name='size'>
+          {% for item in product.variation_set.sizes %}
+          <option value='{{ item.title|lower }}'>{{ item.title|capfirst }}</option>
+          {% endfor %}
+          </select>
+          {% endif %}
+          </form>
+          </a></p>
+					
+
+
+
+        </div>
+
+		   	 </div>
+
+
+		</div>
+
+
+{% cycle "" "" "" "</div><br/><hr/><div class='row'>" %}
+{% endfor %}
+
+</div>
+
+{% endblock %}
+
