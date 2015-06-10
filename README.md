@@ -171,3 +171,4 @@ Each Lecture Name is linked to the related source code.
 [Reactivate Ecommerce Virtualenv](https://github.com/codingforentrepreneurs/Guides/blob/master/reactivate_virtualenv.md)
 >>>>>>> b4b011723fa449399e1f616d2aef79bf27056d04
 # Foober
+# ecommerce
